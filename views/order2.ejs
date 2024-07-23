@@ -1,0 +1,85 @@
+
+         <% 
+  
+         if (order.length > 0) { %>
+           
+   
+            <% 
+           
+
+            function numberAdjust(number){
+               return ("00000"+ number).slice(-5)
+            }
+            
+            for(const k in order) {
+               
+               function getRandomInt(min, max) {
+                  min = Math.ceil(min);
+                  max = Math.floor(max);
+                  return Math.floor(Math.random() * (max - min)) + min;
+                }
+                var thisID = getRandomInt(100, 200)
+               
+               
+               %>
+               
+              
+ 
+                       
+                                             
+                                             <div class="row radius20 orderList  bg-gray-400">
+
+                                                <p class="modalCount2" style="display: none;"><%= thisID %></p>
+
+                                                <div style="max-width: 50px !important;" class="col-sm orderInner">
+                                                    <label class="checkSmart verticalCenter"><input lista="listaDeProdutos" id="checkFull" class="checka form-control" type="checkbox" /><span class="checkmark"></span></label>
+                                                </div>
+                                                <div  style="max-width: 150px !important;" class="col-sm orderInner">
+                                                     <label class="pedido bloco" style="opacity: 1;">#<%=  numberAdjust(order[k].ORDER_ID)  %></label>
+                                                </div>
+                                                <div class="col-sm orderInner">
+                                                     <label class="nomeCliente  " style="opacity: 1;"><%=   order[k].users_client_name.split(" ")[0]  %></label>
+                                                </div>
+                                                <div class="col-sm orderInner statusPedido recebido " style="min-width: 300px !important; max-width: 300px !important;">
+                                                    <i class="fas fa-circle"></i> <span status="<%=  order[k].order_status  %>" class="myStatus"><%=  order[k].order_status  %></span> <span class="dataEntrega"><%= order[k].DATA_ATUALIZOU %></span>
+                                                </div>
+                                                <div class="col-sm orderInner">
+                                                         <label style="opacity: 1; font-weight: bold;    color: black !important;">R$ <%=  Number(order[k].order_valor_total).toFixed(2).replace(".",",").trim()  %></label>
+                                                </div>
+                                                <div class="col-sm orderInner">
+                                                    <label style="font-size:0.8rem !important; padding: 5px; width: 170px !important;" class="infoLabel infoValor loja"><%=  order[k].order_affiliate_id  %></label>
+                                                </div>
+                                                <div class="col-sm orderInner">
+                                                   <label style="font-size:0.8rem !important; padding: 2px" class="infoLabel infoValor"><%=  order[k].order_metodo_entrega  %></label>
+                                                </div>
+                                                <div class="col-sm orderInner">
+                                                   <div class="row rowIconsRounded">
+                                                        <div class="input-group iconOpaco ico etiquetaRedonda">
+                                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 10 13" style="
+                                                              margin: auto">
+                                                              <defs></defs>
+                                                              <path class="a" d="M8.437,13H1.563A1.6,1.6,0,0,1,0,11.376V1.626A1.6,1.6,0,0,1,1.563,0H7.189a.3.3,0,0,1,.219.1l2.5,2.6A.327.327,0,0,1,10,2.944v8.431A1.6,1.6,0,0,1,8.437,13ZM1.563.651a.958.958,0,0,0-.938.975v9.75a.958.958,0,0,0,.938.975H8.437a.958.958,0,0,0,.938-.975V3.251H7.187a.32.32,0,0,1-.313-.325V.651ZM7.5,1.11V2.6H8.932ZM6.874,10.4H6.249a.638.638,0,0,1-.625-.65V9.1H3.75v.65a.638.638,0,0,1-.625.65H2.5a.638.638,0,0,1-.625-.65V9.1a.639.639,0,0,1,.625-.65h.625a.627.627,0,0,1,.114.011l.956-1.989A.643.643,0,0,1,3.75,5.85V5.2a.638.638,0,0,1,.625-.65H5a.638.638,0,0,1,.625.65v.65a.643.643,0,0,1-.445.622l.956,1.988a.607.607,0,0,1,.114-.011h.625A.639.639,0,0,1,7.5,9.1v.65A.638.638,0,0,1,6.874,10.4ZM6.249,9.1v.65h.625V9.1ZM2.5,9.1v.65h.625V9.1ZM4.687,6.9,3.943,8.449H5.432L4.687,6.9ZM4.375,5.2v.65H5V5.2Z"></path>
+                                                           </svg>
+                                                        </div>
+                          
+                                                        <div class="input-group iconOpaco ico etiquetaRedonda">
+                                                           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 21 21" style="
+                                                              margin: auto">
+                                                              &gt;
+                                                              <defs></defs>
+                                                              <path class="a" d="M10.937,16H3.063A2.208,2.208,0,0,1,.875,13.778V2.666H.438a.444.444,0,0,1,0-.889H4.375V1.334A1.324,1.324,0,0,1,5.687,0H8.313A1.324,1.324,0,0,1,9.625,1.334v.444h3.937a.444.444,0,0,1,0,.889h-.437V13.778A2.208,2.208,0,0,1,10.937,16ZM1.75,2.666V13.778a1.325,1.325,0,0,0,1.313,1.334h7.875a1.325,1.325,0,0,0,1.313-1.334V2.666ZM5.687.889a.441.441,0,0,0-.437.445v.444h3.5V1.334A.441.441,0,0,0,8.313.889Zm3.5,11.556A.442.442,0,0,1,8.75,12V5.778a.437.437,0,1,1,.875,0V12A.441.441,0,0,1,9.188,12.445Zm-4.375,0A.441.441,0,0,1,4.375,12V5.778a.437.437,0,1,1,.875,0V12A.442.442,0,0,1,4.812,12.445Z" transform="translate(4 3)"></path>
+                                                           </svg>
+                                                        </div>
+                          
+                                                   </div>
+                                                  
+                                                </div>
+                                                
+                                              </div>
+ 
+              
+            <% } %>
+       
+         <% } %>
+
+         

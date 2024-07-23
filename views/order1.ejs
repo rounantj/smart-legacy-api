@@ -1,0 +1,486 @@
+       
+        <% 
+         
+    
+         
+         
+         
+         if (order.length > 0) { %>
+      
+            <% for(const k in order) {%>
+              
+               <% 
+               function getRandomInt(min, max) {
+                  min = Math.ceil(min);
+                  max = Math.floor(max);
+                  return Math.floor(Math.random() * (max - min)) + min;
+                }
+                var thisID = getRandomInt(0, 100)
+
+               function numberAdjust(number){
+                  return ("00000"+ number).slice(-5)
+               }
+                  var active = '';
+                  if (k == 0) {  
+                     active = 'orderActive'
+                  }               
+                      
+                                 var disabled = 'disabled', naoMostra = 'naoMostra', corPedido = '#F6B504'
+                                 if(Number(order[k].order_status) != 0){  
+                                    disabled = '', naoMostra = '' 
+                                 }
+                                 switch(Number(order[k].order_status)){
+                                    case 0: corPedido= '#000000'; break;
+                                    case 1: corPedido= '#F6B504'; break;
+                                    case 2: corPedido= '#04B5F6'; break;
+                                    case 3: corPedido= '#04B5F6'; break;
+                                    case 4: corPedido= '#50C682'; break;
+                                    default: break;
+                                 }
+               %>
+
+               <div onclick="clicaEmOrdem($(this))"  status="<%=  order[k].order_status  %>" class="col-md-12 radius20 order <%= active %> " alvo="pedido_<%=  numberAdjust(order[k].ORDER_ID) %>" style="    border: 1px solid #efefef; zoom: 80%;">
+               <p class="modalCount" style="display: none;"><%= thisID %></p>
+                  
+
+
+
+
+                  <div class="row">
+                     <div class="col-md-10">
+                        <div class="row" style=" ">
+                           <div class="col" style="max-width: 45px;">
+                              <label  class="checkSmart" style="margin: 10px 5px !important"><input lista="listaDeProdutos" id="checkFull" class="checka form-control" type="checkbox"><span class="checkmark"></span></label>
+                           </div>
+                           <div class="col pedidoUm"  style="padding-top: 10px;">
+                              <label myValue="<%= k %>" class="pedido ">#<%=  numberAdjust(order[k].ORDER_ID)  %></label>
+                           </div>
+                            <div class="col  pedidoDois" style="padding-top: 10px">
+                              <label myValue="<%= order[k].order_client_id %>" class="nomeCliente "><%=   order[k].users_client_name.split(" ")[0]  %></label>
+                           </div>
+                            <div class="col  pedidoTres" style="padding-top: 10px;    min-width: 150px !important;">
+                              <label myValue="<%= order[k].order_valor_total %>" class="preco ">R$ <%= Number(order[k].order_valor_total).toFixed(2).replace(".",",").trim()  %></label>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div style="max-width: 30px;" class="col">
+                              <label style="margin-left: 10px; color: <%= corPedido %>; fill: <%= corPedido %>" class="label dourado"><i style="color: <%= corPedido %> " class="fas fa-circle"></i></label>
+                           </div>
+                           <div class="col">
+                              <div   class="input-group ico etiqueta ">                               
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16.667 15" style="
+                                       margin: auto">
+                                       <defs></defs>
+                                       <path class="a" d="M13.75,15H2.917A2.086,2.086,0,0,1,.833,12.916V6.6a.742.742,0,0,0,.364.076c.074,0,.157,0,.231-.005l.068,0H1.25A1.249,1.249,0,0,1,0,5.417V4.744a1.244,1.244,0,0,1,.089-.465L1.7.262A.42.42,0,0,1,2.083,0h12.5a.414.414,0,0,1,.387.262l1.607,4.018a1.244,1.244,0,0,1,.089.465v.672A1.249,1.249,0,0,1,15.7,6.635a.321.321,0,0,0,.132-.038v6.32A2.086,2.086,0,0,1,13.75,15ZM4.583,8.333h2.5a1.252,1.252,0,0,1,1.25,1.25v4.583H13.75A1.252,1.252,0,0,0,15,12.916V6.673h.434l.062-.007-.033,0H13.333a1.242,1.242,0,0,1-.833-.319,1.244,1.244,0,0,1-.83.319h-2.5a1.245,1.245,0,0,1-.833-.319,1.242,1.242,0,0,1-.83.319H5a1.242,1.242,0,0,1-.833-.319,1.245,1.245,0,0,1-.831.319H1.644c.02,0,.023.005.023.007v6.242a1.252,1.252,0,0,0,1.25,1.25h.416V9.583A1.252,1.252,0,0,1,4.583,8.333Zm0,.833a.417.417,0,0,0-.416.417v4.583H7.5V9.583a.417.417,0,0,0-.417-.417Zm7.917-5a.417.417,0,0,1,.416.416v.833a.417.417,0,0,0,.417.417h2.083a.417.417,0,0,0,.416-.417V4.744a.422.422,0,0,0-.03-.155L14.3.833H2.367L.863,4.589a.422.422,0,0,0-.03.155v.672a.417.417,0,0,0,.417.417H3.333a.417.417,0,0,0,.417-.417V4.583a.417.417,0,0,1,.833,0v.833A.417.417,0,0,0,5,5.833H7.5a.417.417,0,0,0,.417-.417V4.583a.417.417,0,0,1,.833,0v.833a.417.417,0,0,0,.416.417h2.5a.417.417,0,0,0,.416-.417V4.583A.417.417,0,0,1,12.5,4.167ZM12.083,12.5H11.25A1.252,1.252,0,0,1,10,11.25V9.583a1.252,1.252,0,0,1,1.25-1.25h.833a1.252,1.252,0,0,1,1.25,1.25V11.25A1.252,1.252,0,0,1,12.083,12.5ZM11.25,9.166a.417.417,0,0,0-.417.417V11.25a.417.417,0,0,0,.417.417h.833a.417.417,0,0,0,.417-.417V9.583a.417.417,0,0,0-.417-.417Z"></path>
+                                    </svg>
+                                    <label myValue="<%= order[k].order_affiliate_id %>" style="margin: auto;" class="internalLabel label loja"><%= order[k].order_affiliate_id %></label>  
+                              </div>
+                           </div>
+                           
+                        </div>
+                     </div>
+                     <div style="    border-left: 1px solid #efefef; paddin-top: 2%" class="col-md-2 dourado">
+                        <div  class="input-group iconOpaco ico etiquetaRedonda">
+                           <svg pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>" onclick="pdfPedidoOrder($(this), 'pdf')" class="pdfPedido" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 10 13" style="
+                              margin: auto
+                              ">
+                              <defs></defs>
+                              <path class="a" d="M8.437,13H1.563A1.6,1.6,0,0,1,0,11.376V1.626A1.6,1.6,0,0,1,1.563,0H7.189a.3.3,0,0,1,.219.1l2.5,2.6A.327.327,0,0,1,10,2.944v8.431A1.6,1.6,0,0,1,8.437,13ZM1.563.651a.958.958,0,0,0-.938.975v9.75a.958.958,0,0,0,.938.975H8.437a.958.958,0,0,0,.938-.975V3.251H7.187a.32.32,0,0,1-.313-.325V.651ZM7.5,1.11V2.6H8.932ZM6.874,10.4H6.249a.638.638,0,0,1-.625-.65V9.1H3.75v.65a.638.638,0,0,1-.625.65H2.5a.638.638,0,0,1-.625-.65V9.1a.639.639,0,0,1,.625-.65h.625a.627.627,0,0,1,.114.011l.956-1.989A.643.643,0,0,1,3.75,5.85V5.2a.638.638,0,0,1,.625-.65H5a.638.638,0,0,1,.625.65v.65a.643.643,0,0,1-.445.622l.956,1.988a.607.607,0,0,1,.114-.011h.625A.639.639,0,0,1,7.5,9.1v.65A.638.638,0,0,1,6.874,10.4ZM6.249,9.1v.65h.625V9.1ZM2.5,9.1v.65h.625V9.1ZM4.687,6.9,3.943,8.449H5.432L4.687,6.9ZM4.375,5.2v.65H5V5.2Z"></path>
+                           </svg>
+                        </div>
+                        <div class="input-group iconOpaco ico etiquetaRedonda">
+                           <% if(Number(order[k].order_status) != 0){  %>
+                              <svg pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>" onclick="deletarPedidoOrder($(this))" class="cancelarPedido deletaPedido<%= thisID %>" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 21 21" style="
+                                 margin: auto
+                                 ">
+                                 >
+                                 <defs></defs>
+                                 <path class="a" d="M10.937,16H3.063A2.208,2.208,0,0,1,.875,13.778V2.666H.438a.444.444,0,0,1,0-.889H4.375V1.334A1.324,1.324,0,0,1,5.687,0H8.313A1.324,1.324,0,0,1,9.625,1.334v.444h3.937a.444.444,0,0,1,0,.889h-.437V13.778A2.208,2.208,0,0,1,10.937,16ZM1.75,2.666V13.778a1.325,1.325,0,0,0,1.313,1.334h7.875a1.325,1.325,0,0,0,1.313-1.334V2.666ZM5.687.889a.441.441,0,0,0-.437.445v.444h3.5V1.334A.441.441,0,0,0,8.313.889Zm3.5,11.556A.442.442,0,0,1,8.75,12V5.778a.437.437,0,1,1,.875,0V12A.441.441,0,0,1,9.188,12.445Zm-4.375,0A.441.441,0,0,1,4.375,12V5.778a.437.437,0,1,1,.875,0V12A.442.442,0,0,1,4.812,12.445Z" transform="translate(4 3)"></path>
+                              </svg>
+                              <%}else{ %>
+                              
+                              <svg style="margin: auto;  "  pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>" onclick="reativarPedidoOrder($(this))" class="voltarPedido deletaPedido<%= thisID %>" xmlns="http://www.w3.org/2000/svg" width="18.995" height="19.012" viewBox="0 0 18.995 19.012">
+                                 <path id="refresh-left" d="M1.983,3.343A9,9,0,1,1,0,9.554a.5.5,0,0,1,1-.06A8,8,0,1,0,2.738,4H5.483a.5.5,0,0,1,0,1h-4a.5.5,0,0,1-.5-.5V.5a.5.5,0,1,1,1,0Z" transform="translate(0.5 0.512)" fill="#f6b504" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+                              </svg>
+                              <%}%>
+ 
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <p id="lista_pedido_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="display: none;"><%= order[k].order_conteudo %></p>
+               <div style="display: none;" id="pedido_<%=  numberAdjust(order[k].ORDER_ID)  %>">
+                  <div id="orderFull" orderID="<%= thisID %>" class="card card-tasks radius20 " style="padding: 1%; border: 2px solid #f6b504; background: #FAFAFD;">
+                     <div id="orderHeader">
+                        <div class="headerCont"  style="background: #ffffff;margin-top: -1%;    border-radius: 0 20px;  border-bottom: 1px solid #efefef;">
+                           <div  id="hd"  class="row hd">
+                              <div class="orderBody">
+                                 <div id="nPedido"  style="margin: 10% 10%; color: #ffffff">
+                                    <span style="font-size: 18px; font-family: 'Roboto'; ">Pedido</span><br>
+                                    <span style="font-size: 24px;font-family: 'Roboto'; font-weight: bold">#<%=  numberAdjust(order[k].ORDER_ID)  %></span>
+                                 </div>
+                                 <div id="superIcons" style="    margin: 30px 4%;">
+                                    <div    class="input-group iconWhite ico superIcon">
+                                       <svg pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>"  onclick="pdfPedidoOrder($(this),'pdf')" class="pdfPedido" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"  style="margin-left: 8px; margin-top: 8px;">
+                                          <defs> </defs>
+                                          <path class="a" d="M11.812,18H2.188A2.222,2.222,0,0,1,0,15.751V2.251A2.222,2.222,0,0,1,2.188,0h7.877a.426.426,0,0,1,.307.132l3.5,3.6A.45.45,0,0,1,14,4.077V15.751A2.222,2.222,0,0,1,11.812,18ZM2.188.9A1.333,1.333,0,0,0,.875,2.251v13.5A1.333,1.333,0,0,0,2.188,17.1h9.624a1.333,1.333,0,0,0,1.313-1.349V4.5H10.062a.445.445,0,0,1-.438-.45V.9Zm8.311.637V3.6h2.006ZM9.624,14.4H8.749a.889.889,0,0,1-.875-.9v-.9H5.25v.9a.889.889,0,0,1-.875.9H3.5a.889.889,0,0,1-.875-.9v-.9a.889.889,0,0,1,.875-.9h.876a.887.887,0,0,1,.16.015L5.873,8.961A.891.891,0,0,1,5.25,8.1V7.2a.889.889,0,0,1,.875-.9H7a.889.889,0,0,1,.875.9v.9a.891.891,0,0,1-.623.862L8.59,11.715a.859.859,0,0,1,.159-.015h.875a.889.889,0,0,1,.875.9v.9A.889.889,0,0,1,9.624,14.4Zm-.875-1.8v.9h.875v-.9Zm-5.25,0v.9h.876v-.9ZM6.562,9.556,5.52,11.7H7.6L6.562,9.556ZM6.125,7.2v.9H7V7.2Z" transform="translate(4 2)"/>
+                                       </svg>
+                                    </div>
+                                    <div  class="input-group iconWhite ico superIcon">
+                                       <svg pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>"  onclick="pdfPedidoOrder($(this),'print')" class="pdfPedido" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17.662 15.929" style="margin-left: 8px; margin-top: 8px;">
+                                          <defs></defs>
+                                          <path class="a" d="M14.571,15.929H3.091a.442.442,0,0,1-.442-.441v-2.23H1.325A1.326,1.326,0,0,1,0,11.933V7.517A2.211,2.211,0,0,1,2.208,5.309h.441V.452A.442.442,0,0,1,3.091.01L14.571,0a.442.442,0,0,1,.442.442V5.309h.441a2.211,2.211,0,0,1,2.208,2.208v4.43a1.326,1.326,0,0,1-1.324,1.325H15.013v2.216A.442.442,0,0,1,14.571,15.929ZM3.532,11.491v3.554h10.6V11.491Zm-.441-.883h11.48a.442.442,0,0,1,.442.441v1.339h1.325a.442.442,0,0,0,.441-.442V7.517a1.326,1.326,0,0,0-1.325-1.325h-.441v3.1a.442.442,0,0,1-.442.442H3.091a.442.442,0,0,1-.442-.442v-3.1H2.208A1.326,1.326,0,0,0,.883,7.517v4.415a.442.442,0,0,0,.442.442H2.649V11.05A.442.442,0,0,1,3.091,10.608ZM14.13.883l-10.6.01V8.853h10.6V.883ZM10.156,7.075H5.74a.442.442,0,0,1,0-.883h4.416a.442.442,0,0,1,0,.883Zm1.766-1.766H5.74a.442.442,0,0,1,0-.883h6.182a.442.442,0,1,1,0,.883Zm0-1.766H5.74a.442.442,0,0,1,0-.883h6.182a.442.442,0,1,1,0,.883Z" transform="translate(0 0)"/>
+                                       </svg>
+                                    </div>
+                                    <div  class="input-group iconWhite ico superIcon deletaPedido">
+                                       <% if(Number(order[k].order_status) != 0){  %>
+                                       <svg pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>" onclick="deletarPedidoOrder($(this))" class="cancelarPedido deletaPedido<%= thisID %>" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 21 21" style="
+                                          margin: auto
+                                          ">
+                                          >
+                                          <defs></defs>
+                                          <path class="a" d="M10.937,16H3.063A2.208,2.208,0,0,1,.875,13.778V2.666H.438a.444.444,0,0,1,0-.889H4.375V1.334A1.324,1.324,0,0,1,5.687,0H8.313A1.324,1.324,0,0,1,9.625,1.334v.444h3.937a.444.444,0,0,1,0,.889h-.437V13.778A2.208,2.208,0,0,1,10.937,16ZM1.75,2.666V13.778a1.325,1.325,0,0,0,1.313,1.334h7.875a1.325,1.325,0,0,0,1.313-1.334V2.666ZM5.687.889a.441.441,0,0,0-.437.445v.444h3.5V1.334A.441.441,0,0,0,8.313.889Zm3.5,11.556A.442.442,0,0,1,8.75,12V5.778a.437.437,0,1,1,.875,0V12A.441.441,0,0,1,9.188,12.445Zm-4.375,0A.441.441,0,0,1,4.375,12V5.778a.437.437,0,1,1,.875,0V12A.442.442,0,0,1,4.812,12.445Z" transform="translate(4 3)"></path>
+                                       </svg>
+                                       <%}else{ %>
+                                       
+                                       <svg style="margin: auto;  "  pedido="<%=  numberAdjust(order[k].ORDER_ID)  %>" onclick="reativarPedidoOrder($(this))" class="voltarPedido deletaPedido<%= thisID %>" xmlns="http://www.w3.org/2000/svg" width="18.995" height="19.012" viewBox="0 0 18.995 19.012">
+                                          <path id="refresh-left" d="M1.983,3.343A9,9,0,1,1,0,9.554a.5.5,0,0,1,1-.06A8,8,0,1,0,2.738,4H5.483a.5.5,0,0,1,0,1h-4a.5.5,0,0,1-.5-.5V.5a.5.5,0,1,1,1,0Z" transform="translate(0.5 0.512)" fill="#f6b504" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+                                       </svg>
+                                       <%}%>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="rastreio" style="background: white; max-width: 600px;  width: 100%;     margin: auto -40px auto auto;    ">
+
+                                 <%      
+                                 
+                                 if(Number(order[k].order_status) != 0){ %>
+                                    
+                                    <div class="row">
+                                       <div class="statusIcon">
+                                          <div class="input-group iconLogistica ico">
+                                             <svg xmlns="http://www.w3.org/2000/svg" id="status1_<%=  numberAdjust(order[k].ORDER_ID)  %>" class="svgStatus1 status1_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="margin: auto" width="25" height="25" viewBox="0 0 19 17">
+                                                <defs></defs>
+                                                <path class="a" d="M15.675,17H3.325A2.371,2.371,0,0,1,.95,14.639V7.478a.85.85,0,0,0,.415.086c.084,0,.179,0,.263-.006l.077,0H1.425A1.422,1.422,0,0,1,0,6.139V5.377A1.4,1.4,0,0,1,.1,4.85L1.934.3A.479.479,0,0,1,2.375,0h14.25a.472.472,0,0,1,.441.3L18.9,4.85a1.4,1.4,0,0,1,.1.527v.762a1.42,1.42,0,0,1-.948,1.336,1.437,1.437,0,0,1-.153.045.367.367,0,0,0,.151-.043v7.163A2.371,2.371,0,0,1,15.675,17ZM5.225,9.444h2.85A1.423,1.423,0,0,1,9.5,10.861v5.194h6.175A1.423,1.423,0,0,0,17.1,14.639V7.563h.494l.071-.008-.038,0H15.2a1.42,1.42,0,0,1-.95-.361,1.423,1.423,0,0,1-.946.361H10.45a1.424,1.424,0,0,1-.95-.361,1.42,1.42,0,0,1-.946.361H5.7a1.42,1.42,0,0,1-.95-.361,1.424,1.424,0,0,1-.947.361H1.874c.023,0,.026.006.026.009v7.075a1.423,1.423,0,0,0,1.425,1.417H3.8V10.861A1.423,1.423,0,0,1,5.225,9.444Zm0,.944a.474.474,0,0,0-.475.473v5.194h3.8V10.861a.475.475,0,0,0-.475-.473ZM14.25,4.723a.474.474,0,0,1,.475.472v.944a.475.475,0,0,0,.475.473h2.375a.474.474,0,0,0,.475-.473V5.377a.476.476,0,0,0-.034-.176L16.3.944H2.7L.984,5.2a.476.476,0,0,0-.034.176v.762a.475.475,0,0,0,.475.473H3.8a.475.475,0,0,0,.475-.473V5.194a.475.475,0,0,1,.95,0v.944a.475.475,0,0,0,.475.473H8.55a.475.475,0,0,0,.475-.473V5.194a.475.475,0,0,1,.95,0v.944a.474.474,0,0,0,.475.473H13.3a.474.474,0,0,0,.475-.473V5.194A.474.474,0,0,1,14.25,4.723Zm-.475,9.444h-.95A1.423,1.423,0,0,1,11.4,12.75V10.861a1.423,1.423,0,0,1,1.425-1.417h.95A1.423,1.423,0,0,1,15.2,10.861V12.75A1.423,1.423,0,0,1,13.775,14.167Zm-.95-3.778a.475.475,0,0,0-.475.473V12.75a.475.475,0,0,0,.475.473h.95a.475.475,0,0,0,.475-.473V10.861a.475.475,0,0,0-.475-.473Z"/>
+                                             </svg>
+                                          </div>
+                                       </div>
+                                       <div class=" row dots">
+                                          ................................
+                                       </div>
+                                       <div class="statusIcon ">
+                                          <div   class="input-group iconLogistica ico inativo">
+                                             <svg xmlns="http://www.w3.org/2000/svg" id="status2_<%=  numberAdjust(order[k].ORDER_ID)  %>"  class="svgStatus2 status2_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="margin: auto" width="35" height="35" viewBox="0 0 22.638 24.769">
+                                                <defs></defs>
+                                                <g transform="translate(0 0)">
+                                                   <path class="a" d="M8.592,9.532c.145-.084-.161-.551-.017-.468l.056.033c.122-.936.267-1.913.444-2.858A1.787,1.787,0,0,1,10.83,4.793h.781A2.339,2.339,0,0,1,13.7,6.1l.533-1.469a.468.468,0,0,1,.182-.229V2.922a.468.468,0,0,1,.468-.468h4.21a.468.468,0,0,1,.468.468V4.405a.468.468,0,0,1,.182.229l1.193,3.274a.379.379,0,0,1,.028.159l-.028,1.558L21.2,9.5a.437.437,0,0,1,.669.407c4.663.936-7.713.253-13.519.033A.468.468,0,0,1,8.592,9.532Zm4.422-2.4a1.4,1.4,0,0,0-1.4-1.4H10.83A.847.847,0,0,0,10,6.421c-.2,1.057-.365,2.133-.468,3.2l.87.524a.468.468,0,0,0,.524-.028l.831-.182c.376-.28.818-.775,1.26-.617ZM18.627,3.39H15.353v.936h3.274Zm.351,1.871H15L14.151,7.6h5.678Zm1.052,4.21V8.535H13.95v1.4h0l.243.182a.468.468,0,0,0,.524.028l1.27-.4a1.247,1.247,0,0,1,1.47,0l.946.368a.468.468,0,0,0,.561,0L20.058,9.6A.44.44,0,0,1,20.03,9.471Z" transform="translate(-2.872 -2.455)"/>
+                                                   <g transform="translate(0 2.131)">
+                                                      <path class="a" d="M14.149,16.979a1.886,1.886,0,1,1,1.886-1.886A1.889,1.889,0,0,1,14.149,16.979Zm0-2.83a.943.943,0,1,0,.943.943A.944.944,0,0,0,14.149,14.149ZM5.66,16.979a1.886,1.886,0,1,1,1.886-1.886A1.889,1.889,0,0,1,5.66,16.979Zm0-2.83a.943.943,0,1,0,.943.943A.944.944,0,0,0,5.66,14.149Zm10.847-1.887H5.842a2.35,2.35,0,0,1-2.326-1.97L3.309,9.047l0-.009V9.031L2.155,2.126A1.411,1.411,0,0,0,.759.943H.472A.472.472,0,1,1,.472,0H.761A2.366,2.366,0,0,1,3.071,1.886H18.394a.472.472,0,0,1,.452.6L16.96,9.09a.474.474,0,0,1-.453.342H4.33l.118.7a1.409,1.409,0,0,0,1.394,1.182H16.507a.472.472,0,1,1,0,.943ZM3.229,2.83l.944,5.66H16.152l1.616-5.66Z" transform="translate(1.887 2.83)"/>
+                                                   </g>
+                                                </g>
+                                             </svg>
+                                          </div>
+                                       </div>
+                                       <div class=" row dots textoOpaco">
+                                          ................................
+                                       </div>
+                                       <div class="statusIcon">
+                                          <div   class="input-group iconLogistica ico inativo">
+                                             <svg xmlns="http://www.w3.org/2000/svg" id="status3_<%=  numberAdjust(order[k].ORDER_ID)  %>" class="svgStatus3 status3_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="margin: auto" width="27" height="27" viewBox="0 0 22.196 20.153">
+                                                <defs></defs>
+                                                <path class="a" d="M1.485,9.582a.5.5,0,0,1,.5,0l.061.035c.131-1.009.288-2.063.479-3.082A1.927,1.927,0,0,1,4.42,4.977h.842A2.522,2.522,0,0,1,7.518,6.389l.575-1.584a.5.5,0,0,1,.2-.247v-1.6a.5.5,0,0,1,.5-.5h4.54a.5.5,0,0,1,.5.5v1.6a.5.5,0,0,1,.2.247l1.286,3.531a.409.409,0,0,1,.03.172V9.719l.288-.136a.471.471,0,0,1,.721.439V11.03h2.522a4.54,4.54,0,0,1,4.54,4.54v5.044a.5.5,0,0,1-.5.5H20.83a2.018,2.018,0,0,1-3.894,0H8.723a2.018,2.018,0,0,1-3.894,0h-3.1a.5.5,0,0,1-.5-.5V10.021A.5.5,0,0,1,1.485,9.582Zm17.4,2.457h-.5V15.57h4.036a3.531,3.531,0,0,0-3.531-3.531Zm0,9.584a1.009,1.009,0,1,0-1.009-1.009A1.009,1.009,0,0,0,18.883,21.623ZM16.361,20.11h.575a2.018,2.018,0,0,1,3.894,0h1.584V16.579h-4.54a.5.5,0,0,1-.5-.5V12.039H16.361ZM6.776,7.5A1.513,1.513,0,0,0,5.263,5.986H4.42a.913.913,0,0,0-.9.747c-.217,1.14-.393,2.3-.5,3.455l.938.565a.5.5,0,0,0,.565-.03l.842-.651A1.513,1.513,0,0,1,6.776,9.86Zm6.053-4.036H9.3V4.472h3.531Zm.378,2.018H8.92L8,8h6.124Zm1.135,4.54V9.012H7.785v1.513h0l.262.2a.5.5,0,0,0,.565.03l1.357-.817a1.513,1.513,0,0,1,1.69.091l.928.7a.5.5,0,0,0,.605,0l1.18-.565A.474.474,0,0,1,14.343,10.021Zm-7.567,11.6a1.009,1.009,0,1,0-1.009-1.009A1.009,1.009,0,0,0,6.776,21.623ZM2.236,20.11H4.829a2.018,2.018,0,0,1,3.894,0h6.628V10.818l-1.68.8a1.513,1.513,0,0,1-1.69-.086l-.928-.7a.5.5,0,0,0-.565-.03l-1.357.817a1.513,1.513,0,0,1-1.69-.091l-.868-.656a.5.5,0,0,0-.605,0l-.868.656a1.513,1.513,0,0,1-1.69.091l-.979-.6h-.05a.5.5,0,0,1-.146-.05Z" transform="translate(-1.227 -2.455)"/>
+                                             </svg>
+                                          </div>
+                                       </div>
+                                       <div class=" row dots textoOpaco">
+                                          ................................
+                                       </div>
+                                       <div class="statusIcon">
+                                          <div  class="input-group iconLogistica ico inativo">
+                                             <svg xmlns="http://www.w3.org/2000/svg" id="status4_<%=  numberAdjust(order[k].ORDER_ID)  %>" class="svgStatus4 status4_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="margin: auto" width="25" height="25" viewBox="0 0 14.894 15.092">
+                                                <defs></defs>
+                                                <path class="a" d="M11.97,15.092H6.131A2.34,2.34,0,0,1,4.5,14.434a1.41,1.41,0,0,1-1.2.659H1.415A1.417,1.417,0,0,1,0,13.677v-6.6A1.416,1.416,0,0,1,1.415,5.66H3.3a1.409,1.409,0,0,1,.943.36l.832-1.664a5.556,5.556,0,0,0,.583-2.47V1.65A1.652,1.652,0,0,1,7.31,0,1.769,1.769,0,0,1,9.076,1.6l.312,3.119h3.149a2.357,2.357,0,0,1,2.346,2.593l-.566,5.66A2.351,2.351,0,0,1,11.97,15.092ZM7.31.943A.708.708,0,0,0,6.6,1.65v.236A6.5,6.5,0,0,1,5.92,4.778l-1.2,2.408v5.549a1.416,1.416,0,0,0,1.414,1.415H11.97a1.411,1.411,0,0,0,1.408-1.273l.566-5.66A1.415,1.415,0,0,0,12.536,5.66H8.961a.471.471,0,0,1-.47-.424L8.138,1.692A.829.829,0,0,0,7.31.943ZM1.415,6.6a.472.472,0,0,0-.472.471v6.6a.473.473,0,0,0,.472.472H3.3a.472.472,0,0,0,.471-.472v-6.6A.472.472,0,0,0,3.3,6.6Z"/>
+                                             </svg>
+                                          </div>
+                                       </div>
+                                    </div>
+                                   
+   
+                                    <div style="width: 606px;margin: auto -5px;" class="row">
+   
+                                       <div status="<%=   order[k].order_status   %>"  icone="status1_<%=  numberAdjust(order[k].ORDER_ID)  %>" statusName="1" class="statusBar status1">                                 
+                                          <label>Pedido Recebido<br>
+                                             <span class="dataEntrega" style="font-family: 'Roboto';color: #f6b504 ; font-weight: italic"><%=   order[k].createdAt   %></span>
+                                          </label> 
+                                       </div>
+                                       <div status="<%=   order[k].order_status   %>"  icone="status2_<%=  numberAdjust(order[k].ORDER_ID)  %>" statusName="2" class="statusBar status2">                                 
+                                          <label>Em separação<br>
+                                             <% 
+                                             if(Number(order[k].order_status) == 1){
+                                                %> <span class="setStatus<%= thisID %>" date="<%=   order[k].DATA_ATUALIZOU   %>" status="2" icon="status2_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="font-family: 'Roboto';color: #f6b504 ; font-weight: italic; text-decoration: underline; cursor: pointer" onclick="setStatusOrder($(this))">Mudar status</span><%
+                                              }else if(Number(order[k].order_status) > 1){
+                                                %><span class="setStatus<%= thisID %> dataEntrega" date="<%=   order[k].DATA_ATUALIZOU   %>" style="font-family: 'Roboto';color: #f6b504; font-weight: italic; text-decoration: underline; cursor: pointer"><%=   order[k].DATA_ATUALIZOU   %></span> <%
+                                          }
+                                            %>
+                                            
+                                          </label> 
+                                       </div>
+                                       <div status="<%=   order[k].order_status   %>" icone="status3_<%=  numberAdjust(order[k].ORDER_ID)  %>" statusName="3" class="statusBar status3">                                 
+                                          <label>Saiu para entrega<br>
+                                             <% 
+                                             if(Number(order[k].order_status) == 2){
+                                                %> <span class="setStatus<%= thisID %>" date="<%=   order[k].DATA_ATUALIZOU   %>"  status="3" icon="status3_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="font-family: 'Roboto';color: #f6b504 ; font-weight: italic; text-decoration: underline; cursor: pointer"  onclick="setStatusOrder($(this))">Mudar status</span> <%
+                                              }else if(Number(order[k].order_status) > 2){
+                                                %> <span class="setStatus<%= thisID %> dataEntrega" date="<%=   order[k].DATA_ATUALIZOU   %>" style="font-family: 'Roboto';color: #f6b504; font-weight: italic; text-decoration: underline; cursor: pointer"><%=   order[k].DATA_ATUALIZOU   %></span> <%
+                                          }
+                                            %>
+                                          </label> 
+                                       </div>
+                                       <div status="<%=   order[k].order_status   %>" icone="status4_<%=  numberAdjust(order[k].ORDER_ID)  %>" statusName="4" class="statusBar status4">                                 
+                                          <label>Pedido entregue<br>
+                                             <% 
+                                             if(Number(order[k].order_status) == 3){
+                                                %><span class="setStatus<%= thisID %>" date="<%=   order[k].DATA_ATUALIZOU   %>"  status="4"  icon="status4_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="font-family: 'Roboto';color: #f6b504 ; font-weight: italic; text-decoration: underline; cursor: pointer"  onclick="setStatusOrder($(this))">Mudar status</span> <%
+                                             }else if(Number(order[k].order_status) > 3){
+                                                %> <span class="setStatus<%= thisID %> dataEntrega" date="<%=   order[k].DATA_ATUALIZOU   %>" style="font-family: 'Roboto';color: rgb(80, 198, 130); font-weight: italic; text-decoration: underline; cursor: pointer"><%=   order[k].DATA_ATUALIZOU   %></span> <%
+                                          }
+                                             %>
+                                             
+                                          </label> 
+                                       </div>
+   
+                                    </div>
+                                    
+                              <%
+                                 }else{
+                           
+                              %> 
+                                    <h3 style="color: red; text-align: center">Pedido cancelado!</h3>
+                              <%
+                                 }
+                              %>
+                                 
+
+                              </div>
+                           </div>
+                        </div>
+      
+                     </div>
+                     
+                     <br><br>
+                     <div class="<%=  disabled  %>" id="orderContent"   >
+                        <div style="max-width: 95%; margin:5% auto"  class="row">
+                           <div class="col-md-7">
+                              <div style="margin-top: 5%"   class="row">
+                                 <div style="border-radius: 100%; margin: auto 5% auto 5% !important; max-height: 50px;  max-width: 50px" class="input-group iconLogistica ico inativo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto ; fill: #222B45 !important; "  width="25" height="25"  viewBox="0 0 22.195 20.153">
+                                       <defs></defs>
+                                       <path class="a" d="M1.485,9.582a.5.5,0,0,1,.5,0l.061.035c.131-1.009.288-2.063.479-3.082A1.927,1.927,0,0,1,4.42,4.977h.842A2.522,2.522,0,0,1,7.518,6.389l.575-1.584a.5.5,0,0,1,.2-.247v-1.6a.5.5,0,0,1,.5-.5h4.54a.5.5,0,0,1,.5.5v1.6a.5.5,0,0,1,.2.247l1.286,3.531a.409.409,0,0,1,.03.172V9.719l.288-.136a.471.471,0,0,1,.721.439V11.03h2.522a4.54,4.54,0,0,1,4.54,4.54v5.044a.5.5,0,0,1-.5.5H20.83a2.018,2.018,0,0,1-3.894,0H8.723a2.018,2.018,0,0,1-3.894,0h-3.1a.5.5,0,0,1-.5-.5V10.021A.5.5,0,0,1,1.485,9.582Zm17.4,2.457h-.5V15.57h4.036a3.531,3.531,0,0,0-3.531-3.531Zm0,9.584a1.009,1.009,0,1,0-1.009-1.009A1.009,1.009,0,0,0,18.883,21.623ZM16.361,20.11h.575a2.018,2.018,0,0,1,3.894,0h1.584V16.579h-4.54a.5.5,0,0,1-.5-.5V12.039H16.361ZM6.776,7.5A1.513,1.513,0,0,0,5.263,5.986H4.42a.913.913,0,0,0-.9.747c-.217,1.14-.393,2.3-.5,3.455l.938.565a.5.5,0,0,0,.565-.03l.842-.651A1.513,1.513,0,0,1,6.776,9.86Zm6.053-4.036H9.3V4.472h3.531Zm.378,2.018H8.92L8,8h6.124Zm1.135,4.54V9.012H7.785v1.513h0l.262.2a.5.5,0,0,0,.565.03l1.357-.817a1.513,1.513,0,0,1,1.69.091l.928.7a.5.5,0,0,0,.605,0l1.18-.565A.474.474,0,0,1,14.343,10.021Zm-7.567,11.6a1.009,1.009,0,1,0-1.009-1.009A1.009,1.009,0,0,0,6.776,21.623ZM2.236,20.11H4.829a2.018,2.018,0,0,1,3.894,0h6.628V10.818l-1.68.8a1.513,1.513,0,0,1-1.69-.086l-.928-.7a.5.5,0,0,0-.565-.03l-1.357.817a1.513,1.513,0,0,1-1.69-.091l-.868-.656a.5.5,0,0,0-.605,0l-.868.656a1.513,1.513,0,0,1-1.69.091l-.979-.6h-.05a.5.5,0,0,1-.146-.05Z" transform="translate(-1.227 -2.455)"/>
+                                    </svg>
+                                 </div>
+                                 <div  style="line-height: 1.3;">
+                                    <label style=" line-height: 1.5;" class="label interna">
+                                    Entrega<br>
+                                    <span class="superLabel"><%=   order[k].order_metodo_entrega   %> - </span> <span> R$ <%=   Number(order[k].order_valor_entrega).toFixed(2).replace(".",",")   %></span>
+                                    <br>
+                                    <%=   order[k].users_client_endereco  %>,<br><%=   order[k].users_client_bairro %> - <%=   order[k].users_client_cidade %>
+                                    </label>                                    
+                                 </div>
+                              </div>
+                              <div style="margin-top: 5%"  class="row">
+                                 <div style="border-radius: 100%; margin: auto 5% auto 5% !important; max-height: 50px;  max-width: 50px" class="input-group iconLogistica ico inativo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto ; fill: #222B45 !important; "  width="25" height="25" viewBox="0 0 12.137 19.108">
+                                       <defs>></defs>
+                                       <path class="a" d="M11.178-3.78c0-4.536-6.642-3.348-6.642-5.436,0-.576.522-.864,1.314-.864A9.811,9.811,0,0,1,9.918-8.73l1.242-2.61a9.319,9.319,0,0,0-3.942-1.35v-2.628H4.824v2.646c-2.3.378-3.744,1.764-3.744,3.762,0,4.464,6.642,3.168,6.642,5.31,0,.666-.612,1.026-1.584,1.026A8.056,8.056,0,0,1,1.566-4.482L.288-1.908A9.3,9.3,0,0,0,4.824.018V2.79H7.218V.036C9.486-.27,11.178-1.566,11.178-3.78Z" transform="translate(0.337 15.818)"/>
+                                    </svg>
+                                 </div>
+                                 <div  style="line-height: 1.3;">
+                                    <label  style=" line-height: 1.5;" class="label interna">
+                                    Valor Total<br>
+                                    <span class="superLabel">R$ <%= Number(order[k].order_valor_total).toFixed(2).replace(".",",").trim()  %></span>
+                                    </label>
+                                 </div>
+                              </div>
+                              <div style="margin-top: 5%"  class="row">
+                                 <div style="border-radius: 100%; margin: auto 5% auto 5% !important; max-height: 50px;  max-width: 50px" class="input-group iconLogistica ico inativo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto ; fill: #222B45 !important; "  width="25" height="25" viewBox="0 0 14 20.008">
+                                       <defs></defs>
+                                       <path class="a" d="M11.5,20.008h-9a2.486,2.486,0,0,1-1.768-.732A2.518,2.518,0,0,1,0,17.508V6.5A2.5,2.5,0,0,1,2.5,4H3V2.5A2.5,2.5,0,0,1,5.5,0h3A2.5,2.5,0,0,1,11,2.5V4h.5A2.5,2.5,0,0,1,14,6.5V17.508A2.5,2.5,0,0,1,11.5,20.008ZM2.5,5A1.5,1.5,0,0,0,1,6.5V17.508a1.5,1.5,0,0,0,1.5,1.5h9a1.5,1.5,0,0,0,1.5-1.5V6.5A1.5,1.5,0,0,0,11.5,5H11V6h.5a.5.5,0,0,1,0,1h-9a.5.5,0,1,1,0-1H3V5ZM9,1.085V6h1V2.5A1.5,1.5,0,0,0,9,1.085ZM7,1V6H8V1ZM5.5,1A1.5,1.5,0,0,0,4,2.5V6H6V1Zm5,17h-1a.5.5,0,1,1,0-1h1a.5.5,0,0,1,0,1Zm-3,0h-1a.5.5,0,0,1,0-1h1a.5.5,0,1,1,0,1Zm-3,0h-1a.5.5,0,1,1,0-1h1a.5.5,0,1,1,0,1Zm6-2h-1a.5.5,0,1,1,0-1h1a.5.5,0,0,1,0,1Zm-3,0h-1a.5.5,0,0,1,0-1h1a.5.5,0,1,1,0,1Zm-3,0h-1a.5.5,0,1,1,0-1h1a.5.5,0,1,1,0,1Zm6-2h-1a.5.5,0,1,1,0-1h1a.5.5,0,0,1,0,1Zm-3,0h-1a.5.5,0,0,1,0-1h1a.5.5,0,1,1,0,1Zm-3,0h-1a.5.5,0,1,1,0-1h1a.5.5,0,0,1,0,1Zm7-2h-9a.5.5,0,0,1-.5-.5v-3A.5.5,0,0,1,2.5,8h9a.5.5,0,0,1,.5.5v3A.5.5,0,0,1,11.5,12ZM3,9v2h8V9Z" transform="translate(0)"/>
+                                    </svg>
+                                 </div>
+                                 <div style="line-height: 1.3;">
+                                    <label  style=" line-height: 1.5;" class="label interna">
+                                       <%=   order[k].order_local_pagamento   %><br>
+                                    <span class="superLabel"><%=   order[k].order_metodo_pagamento.toUpperCase() %></span>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-5" style="color:rgb(83, 83, 83) !important">
+                              <h5 style="font-size: 0.8rem; text-align: left; margin-left: 5%; font-weight: bold; color: black" class="label">DADOS DO CLIENTE</h5>
+                              <div class="col-md-12 radius20" style="border: 1px solid #efefef; padding: 5%; margin-top: -5%">
+                                 <div  class="row">
+                                    <div style="border-radius: 100%; margin: auto 5% auto 5% !important; max-height: 35px;  max-width: 35px" class="input-group iconLogistica ico inativo">
+                                       <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto; fill: #222B45 !important; " width="20" height="20" viewBox="0 0 20 20">
+                                          <defs></defs>
+                                          <g transform="translate(-2 -2)">
+                                             <path class="a" d="M10,20A10,10,0,1,1,20,10,10.011,10.011,0,0,1,10,20ZM10,1a9,9,0,1,0,7.794,4.5A9.01,9.01,0,0,0,10,1Zm1.5,16h-3A5.506,5.506,0,0,1,3,11.5a.5.5,0,0,1,.5-.5h13a.5.5,0,0,1,.5.5A5.506,5.506,0,0,1,11.5,17ZM9,15a.994.994,0,0,0-1,.973A4.6,4.6,0,0,0,8.5,16h3a4.4,4.4,0,0,0,.524-.031.994.994,0,0,0-1-.969H9ZM4.027,12a4.53,4.53,0,0,0,2.99,3.75A2,2,0,0,1,9,14h2.025a2,2,0,0,1,1.983,1.741A4.531,4.531,0,0,0,15.973,12H4.027ZM13,9a1,1,0,1,1,1-1A1,1,0,0,1,13,9ZM7,9A1,1,0,1,1,8,8,1,1,0,0,1,7,9Z" transform="translate(2 2)"/>
+                                          </g>
+                                       </svg>
+                                    </div>
+                                    <label style="    margin: auto 0 !important;" class="label interna"><%=   order[k].users_client_name %></label>
+                                 </div>
+                                 <hr>
+                                 <div  class="row">
+                                    <div style="border-radius: 100%; margin: auto 5% auto 5% !important; max-height: 35px;  max-width: 35px" class="input-group iconLogistica ico inativo">
+                                       <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto ; fill: #222B45 !important; "  width="18" height="18" viewBox="0 0 18 18">
+                                          <defs> </defs>
+                                          <path class="a" d="M13.491,10.8H1.928A1.93,1.93,0,0,1,0,8.874V1.928A1.93,1.93,0,0,1,1.928,0H13.491a1.93,1.93,0,0,1,1.928,1.928V8.874A1.93,1.93,0,0,1,13.491,10.8ZM5.979,5.627h0L1.424,9.915a1.154,1.154,0,0,0,.5.116H13.491a1.154,1.154,0,0,0,.5-.116L9.441,5.628,7.954,6.851a.385.385,0,0,1-.49,0L5.979,5.627Zm8.557-4.2h0l-.028.026L10.04,5.133l4.487,4.223.01.011a1.147,1.147,0,0,0,.11-.493V1.928a1.154,1.154,0,0,0-.112-.5Zm-13.652,0a1.164,1.164,0,0,0-.112.5V8.874a1.147,1.147,0,0,0,.11.493l.011-.011L5.379,5.133.911,1.454ZM1.928.771a1.161,1.161,0,0,0-.5.112L7.71,6.053,13.988.883a1.153,1.153,0,0,0-.5-.112Z" transform="translate(1.542 3.855)"/>
+                                       </svg>
+                                    </div>
+                                    <label   style="margin: auto 5px !important; font-size: 12px !important;" class="label interna"><%=   order[k].users_client_mail %></label>
+                                 </div>
+                                 <div  class="row">
+                                    <div style="border-radius: 100%;     margin: 20px 0px auto 5% !important;  max-height: 35px;  max-width: 35px" class="input-group iconLogistica ico inativo">
+                                       <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto; fill: #222B45 !important; "  width="18" height="19" viewBox="0 0 18 19">
+                                          <defs></defs>
+                                          <path class="a" d="M7.333,15.419H1.928A1.93,1.93,0,0,1,0,13.491V1.928A1.93,1.93,0,0,1,1.928,0H7.333A1.93,1.93,0,0,1,9.26,1.928V13.491A1.93,1.93,0,0,1,7.333,15.419ZM1.928.771A1.158,1.158,0,0,0,.771,1.928V13.491a1.158,1.158,0,0,0,1.157,1.157H7.333a1.158,1.158,0,0,0,1.156-1.157V1.928A1.158,1.158,0,0,0,7.333.771Zm2.7,13.106a.771.771,0,1,1,.771-.771A.772.772,0,0,1,4.626,13.877Z" transform="translate(4.626 1.542)"/>
+                                       </svg>
+                                    </div>
+                                    <label style="margin: 20px 5px !important;" class="label interna"><%=   order[k].users_client_telefone %></label>
+                                 </div>
+                                 <br>
+                                 <div class="radius20" style="border: 1px solid #f6b504; padding:2%; max-width: 80%;margin: auto; cursor: pointer">
+                                    <h5 
+                                    users_client_affiliate_id="<%=   order[k].users_client_affiliate_id %>" 
+                                    users_client_name="<%=   order[k].users_client_name %>" 
+                                    users_client_mail="<%=   order[k].users_client_mail %>" 
+                                    users_client_telefone="<%=   order[k].users_client_telefone %>"                       
+                                    users_client_cpf="<%=   order[k].users_client_cpf %>" 
+                                    users_client_endereco="<%=   order[k].users_client_endereco %>" 
+                                    users_client_cep="<%=   order[k].users_client_cep %>" 
+                                    users_client_bairro="<%=   order[k].users_client_bairro %>" 
+                                    users_client_cidade="<%=   order[k].users_client_cidade %>" 
+                                    users_client_listas_compras="<%=   order[k].users_client_listas_compras %>" 
+                                    class="infoCliente" onclick="clientInformation($(this))" id="infoCliente" style="color: #f6b504; font-size: 1rem; text-align: center; margin: auto">Ver mais informações</h5>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <style>
+                           
+                              .pedido-box {
+                              margin-bottom: 20px;
+                              border: 1px solid #EBEBEB;
+                              border-radius: 24px;
+                              overflow: hidden;
+                              }
+
+                              .pedido-box > * {
+                              padding: 30px;
+                              }
+
+                              .pedido-box__header {
+                              display: flex;
+                              align-items: center;
+                              justify-content: space-between;
+                              border-bottom: 1px solid #EBEBEB;
+                              }
+
+                              .pedido-box__body, .pedido-box__footer {
+                              background-color: #F9FAFB;
+                              }
+                        </style>
+
+                  <% if(order[k].order_general_comment != "" && order[k].order_general_comment != null && order[k].order_general_comment != ""){ %>
+                        <div class="pedido-box">
+                           <div class="pedido-box__header">
+                             Comentário do cliente
+                           </div>
+                  
+                 
+                           <div class="pedido-box__body">
+                             <i>
+                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18">
+                                 <path id="store" d="M16.5,18H3.5A2.5,2.5,0,0,1,1,15.5V7.918a.891.891,0,0,0,.436.091c.089,0,.188,0,.277-.006l.081,0H1.5A1.5,1.5,0,0,1,0,6.5V5.693a1.492,1.492,0,0,1,.107-.558L2.036.315A.5.5,0,0,1,2.5,0h15a.5.5,0,0,1,.464.314l1.929,4.821A1.492,1.492,0,0,1,20,5.693V6.5a1.5,1.5,0,0,1-1.16,1.462A.385.385,0,0,0,19,7.915V15.5A2.5,2.5,0,0,1,16.5,18Zm-11-8h3A1.5,1.5,0,0,1,10,11.5V17h6.5A1.5,1.5,0,0,0,18,15.5V8.007h.52L18.6,8l-.04,0H16a1.49,1.49,0,0,1-1-.383A1.493,1.493,0,0,1,14,8H11a1.494,1.494,0,0,1-1-.383A1.49,1.49,0,0,1,9,8H6a1.49,1.49,0,0,1-1-.383A1.494,1.494,0,0,1,4,8H1.972C2,8,2,8.007,2,8.009V15.5A1.5,1.5,0,0,0,3.5,17H4V11.5A1.5,1.5,0,0,1,5.5,10Zm0,1a.5.5,0,0,0-.5.5V17H9V11.5a.5.5,0,0,0-.5-.5ZM15,5a.5.5,0,0,1,.5.5v1A.5.5,0,0,0,16,7h2.5a.5.5,0,0,0,.5-.5V5.693a.507.507,0,0,0-.036-.186L17.161,1H2.84l-1.8,4.507A.507.507,0,0,0,1,5.693V6.5a.5.5,0,0,0,.5.5H4a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,1,1,0v1A.5.5,0,0,0,6,7H9a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,1,1,0v1A.5.5,0,0,0,11,7h3a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,1,15,5Zm-.5,10h-1A1.5,1.5,0,0,1,12,13.5v-2A1.5,1.5,0,0,1,13.5,10h1A1.5,1.5,0,0,1,16,11.5v2A1.5,1.5,0,0,1,14.5,15Zm-1-4a.5.5,0,0,0-.5.5v2a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5v-2a.5.5,0,0,0-.5-.5Z" fill="#687c97"></path>
+                               </svg>
+                             </i>
+                             <%=  order[k].order_general_comment %>
+                           </div>
+                         </div>
+                   <%}else{%> <div></div> <%} %>
+      
+                     </div>
+                     
+                     <div  class="<%= disabled  %>" id="orderDetails">
+                         <div style="margin-top:5%" class="row">
+                              <div  class="col-md-12 " style="margin-top: -5%; max-width: 92%; margin:auto">
+                                 <div class="card card-tasks radius20" style="cursor: pointer;background: #fafafd; padding-bottom: 25px">
+                                    <div class="card-header" style="border-radius: 20px 20px 0 0;border-bottom: 1px solid #efefef;background: #ffffff; padding: 35px; cursor: pointer; max-height: 50px">
+                                       <div   class="<%= naoMostra  %>" alvo="pedido_<%=  numberAdjust(order[k].ORDER_ID)  %>"
+                                        style="    display: inline-flex;
+                                        min-width: 150px;
+                                          background-color: #e9ecef; fill: #222B45; justify-content: center;
+                                          border: 1px solid #ced4da; float: right;cursor: pointer;
+                                          border-radius: 20px; font: normal normal bold 1rem Roboto; background-color: #ffffff; max-width: 150px; height: 40px; border: 1px solid #efefef;     margin: -20px auto;" class="input-group ico editarPedido<%= thisID %>" onclick="editaPedidoOrder($(this))">
+                                          <svg xmlns="http://www.w3.org/2000/svg" style="margin:6% auto" width="20" height="20" viewBox="0 0 20 20">
+                                             <defs></defs>
+                                             <path class="a" d="M12.929,15H2.083A2.086,2.086,0,0,1,0,12.917V2.084A2.086,2.086,0,0,1,2.083,0H7.928a.417.417,0,0,1,0,.833H2.083a1.252,1.252,0,0,0-1.25,1.25V12.917a1.252,1.252,0,0,0,1.25,1.25H12.929a1.251,1.251,0,0,0,1.25-1.25V7.084a.417.417,0,0,1,.834,0v5.833A2.086,2.086,0,0,1,12.929,15Zm-5-5.833H6.262a.417.417,0,0,1-.417-.416V7.084a.417.417,0,0,1,.122-.295L12.633.122a.417.417,0,0,1,.59,0L14.89,1.789a.416.416,0,0,1,0,.59L8.223,9.046A.414.414,0,0,1,7.928,9.167Zm5-8.161h0l-6.25,6.25V8.334H7.756l6.25-6.25L12.929,1.007Z" transform="translate(2.488 2.499)"/>
+                                          </svg>
+                                          <label  id="editarPedido" style="margin-left: 5%; cursor: pointer" class="label ">Editar pedido</label>
+                                       </div>
+                                    </div>
+                                    <div class="card-body container" style="max-width: 95%;max-height: 85vh;">
+                                          <div style="max-height: 40px;     padding: 35px;                                          text-align: left;" class="row">
+                                             <div  style="    min-width: 250px !important;" class="col-sm">
+                                             <label class="infoLabel">Produto e descrição</label>
+                                             </div>
+                                             <div class="col-sm">
+                                             <label class="infoLabel">Quantidade</label>
+                                             </div>
+                                             <div class="col-sm">
+                                             <label class="infoLabel">Preço</label>
+                                             </div>
+                                             <div class="col-sm">
+                                             <label class="infoLabel">Desconto</label>
+                                             </div>
+                                             <div class="col-sm">
+                                             <label class="infoLabel">Subtotal</label>
+                                             </div>
+                                            
+                                          </div>
+      
+                                          <!-- ITEMS DO PEDIDO -->
+                                          <div id="listagem_<%=  numberAdjust(order[k].ORDER_ID)  %>" style="max-height: 60vh;     padding: 15px;" class="itensDoPedido verticalScroll">
+
+                                          </div>
+                                      
+      
+      
+                                       </div>
+                                 
+                                    </div>
+                                 </div>
+                        </div>
+      
+                     </div>
+                    
+                  </div>
+               </div>
+              
+
+               
+
+
+
+
+
+
+ 
+              
+            <% } %>
+       
+         <% } %>
+ 
+         

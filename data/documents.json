@@ -1,0 +1,94 @@
+{
+	"documents": [
+		{
+			"file": "package.json",
+			"details": "Detalhes, scripts de teste e dependências da aplicação"
+			
+		},
+        {
+			"file": "../src/controllers/business.js",
+			"details": "Controles baseados nas regras de negócio"
+			
+		},
+        {
+			"file": "../src/controllers/users.js",
+			"details": "Controles de usuario baseados nas regras de negócio"
+			
+		},
+        {
+			"file": "../src/controllers/documentation.js",
+			"details": "Controles de exibição da documentação desta aplicação"
+			
+		},
+        {
+			"file": "../src/models/db.js",
+			"details": "Modelo de conexão ao database para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/affiliates.js",
+			"details": "Modelo de dados de afiliados para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/carts.js",
+			"details": "Modelo de dados do carrinho para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/listas_compras.js",
+			"details": "Modelo de dados de listas de compra para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/masters.js",
+			"details": "Modelo de dados de lojas master (matriz principal) para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/orders.js",
+			"details": "Modelo de dados de pedidos para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/posts.js",
+			"details": "Modelo de dados de posts (receitas ou outros) para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/products.js",
+			"details": "Modelo de dados de produtos para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/users_affiliates.js",
+			"details": "Modelo de dados de usuários de filiais para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/users_masters.js",
+			"details": "Modelo de dados de usuários de matrizes (masters) para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/models/users_clients.js",
+			"details": "Modelo de dados de usuários de clientes para uso do sequelize"
+			
+		},
+        {
+			"file": "../src/routes/routes.js",
+			"details": "Script que define as rotas da aplicação"
+			
+		},
+        {
+			"file": "../src/main.js",
+			"details": "Script principal que orquestra as rotas, controles, modelos e autenticação de JWT."
+			
+		},
+        {
+			"file": "../src/views/documentation.ejs",
+			"details": "View EJS que consome o end-poit da documentação a fim de exibi-la"
+			
+		}
+	]
+}

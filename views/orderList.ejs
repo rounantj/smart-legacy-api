@@ -1,0 +1,217 @@
+
+<% 
+
+if (lista.length > 0) { %>
+     
+            <% for(const k in lista) {
+                var precoVenda = Number(lista[k].product_site_value);
+                var tipoDESCONTO =  lista[k].product_site_discount_type;
+                %>            
+               
+                <div class="row radius20 top2 orderContent" style="background: #ffffff;">
+                    <div style="min-width: 250px !important;" class="col-sm">
+                        
+                        <div class="row">
+                            <div style="    margin-top: -10px !important;"  class="col-sm imgContainer">
+                                <div  product_code="<%= lista[k].product_code  %>" product_ean="<%= lista[k].product_ean  %>" class="image img miniatura"> </div>
+                             </div>
+                            <div class="itemDetails">
+                                <span class="codigoItem"><%= lista[k].product_code  %></span><br>
+                                <label class="label" style="line-height: 1.5 !important;">  <%= lista[k].product_site_name  %></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <label class="infoLabel infoValor quaria"><%= lista[k].quantidade %></label>
+                    </div>
+                    <% 
+                           var descontos   = lista[k].product_site_discount_type
+                           
+                        if(descontos != null && descontos.indexOf("compre X pague Y") > -1 ){
+                    %>
+                            <div class="col-sm">
+                                <label class="infoLabel infoValor"> R$ <%=  (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) ) %></label>
+                            </div>
+                            <div class="col-sm">
+                   <%                         
+                                if(lista[k].product_site_discount_value != null){
+                                    var disconto = JSON.parse(`${lista[k].product_site_discount_value}`)
+                                    if(disconto?.levePague?.valorDescontado != undefined && disconto?.levePague?.valorDescontado != null){
+                                        var leve = disconto?.levePague?.valorDescontado.split(" ")[1]
+                                        var pague = disconto?.levePague?.valorDescontado.split(" ")[3]
+                    %>
+                                        
+                                        <span class="ouro" style="    font-family: 'Roboto';    color: #f6b504;    font-weight: italic;"> Leve <%= leve %> <span style="font-weight: bold;">Pague <%= pague %> </span> </span>
+                                        <br />
+                                        <label style="color: #f6b504 !important;" class="infoLabel infoValor">
+                                            -R$ <%=  Number( (lista[k].product_valor - (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) )  )   * lista[k].quantidade ).toFixed(2)  %>
+                                        </label>
+                    <%
+                                    }
+                                } 
+                                
+                    %>
+                            </div>
+
+
+                    <% 
+                        }else if(descontos != null && descontos.indexOf("no carrinho") > -1 ){ 
+                    %>
+                            <div class="col-sm">
+                                <label class="infoLabel infoValor"> R$ <%=   (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) ) %></label>
+                            </div>
+                            <div class="col-sm">
+                    <%                         
+                                if(lista[k].product_site_discount_value != null){
+                                    var disconto = JSON.parse(`${lista[k].product_site_discount_value}`), precoVenda = lista[k].product_site_value
+                                    if(disconto?.porcentagem?.precoFinal != undefined && disconto?.porcentagem?.precoFinal != null){
+                                    if(disconto?.porcentagem?.precoFinal < precoVenda){
+                                        precoVenda = disconto?.porcentagem?.precoFinal
+                                    } 
+                                    }
+
+                                    if(disconto.subtracao.precoFinal != undefined && disconto.subtracao.precoFinal != null){
+                                        if(disconto.subtracao.precoFinal < precoVenda){
+                                            precoVenda = disconto.subtracao.precoFinal
+                                        } 
+                                    }
+                                    
+                                    
+                    %> 
+                                        <span class="ouro" style="    font-family: 'Roboto';    color: #f6b504;    font-weight: italic;">  <span style="font-weight: bold;">Desconto</span> </span>
+                                        <br />
+                                        <label style="color: #f6b504 !important;" class="infoLabel infoValor">
+                                            -R$ <%=  Number( (lista[k].product_valor - (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) )  )   * lista[k].quantidade ).toFixed(2)  %>
+                                        </label>
+                    <%
+                                    
+                                } 
+                                
+                    %>
+                            </div>
+
+
+                    <% 
+                        }else if(descontos != null && descontos.indexOf("preço total") > -1 )   {
+                    %>
+                            <div class="col-sm">
+                                <label class="infoLabel infoValor"> R$ <%=   (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) ) %></label>
+                            </div>
+                            <div class="col-sm">
+                    <%                         
+                                if(lista[k].product_site_discount_value != null){
+                                    var disconto = JSON.parse(`${lista[k].product_site_discount_value}`), precoVenda = lista[k].product_site_value
+                                    if(disconto?.porcentagemProduto?.precoFinal != undefined && disconto?.porcentagemProduto?.precoFinal != null){
+                                    if(disconto?.porcentagemProduto?.precoFinal < precoVenda){
+                                        precoVenda = disconto?.porcentagemProduto?.precoFinal
+                                    } 
+                                    }
+
+                                    if(disconto?.porcentagemProduto?.precoFinal != undefined && disconto?.porcentagemProduto?.precoFinal != null){
+                                        if(disconto?.porcentagemProduto?.precoFinal < precoVenda){
+                                            precoVenda = disconto?.porcentagemProduto?.precoFinal
+                                        } 
+                                    }
+                                    
+                                    
+                    %> 
+                                        <span class="ouro" style="    font-family: 'Roboto';    color: #f6b504;    font-weight: italic;">  <span style="font-weight: bold;">Desconto</span> </span>
+                                        <br />
+                                        <label style="color: #f6b504 !important;" class="infoLabel infoValor">
+                                            -R$ <%=  Number( (lista[k].product_valor - (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor) )  )   * lista[k].quantidade ).toFixed(2)  %>
+                                        </label>
+                    <%
+                                    
+                                } 
+                                
+                    %>
+                            </div>
+
+                        
+                    <% 
+                        }else{
+                    %>
+                            <div class="col-sm">
+                                <label class="infoLabel infoValor">
+                                    <% 
+                                    var myPrice = null
+                                    if(precoVenda == undefined){
+                                        myPrice = (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor)) 
+                                       }else{
+                                        myPrice = (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor))  
+                                       }
+                                    %>
+                                    R$ <%= myPrice %>
+
+                                    
+                                
+                                </label>
+                            </div>
+                            <div class="col-sm">
+                                
+                                        <span class="ouro" style="    font-family: 'Roboto';    color: #f6b504;    font-weight: italic;">   Sem desconto </span>
+                                        <br />
+                                        <label style="color: #f6b504 !important;" class="infoLabel infoValor">
+                                            -R$ 0,00 
+                                        </label>
+                                
+                            </div>
+                    <%
+
+                        }
+                        
+                    %>
+
+
+                        
+
+                    <div class="col-sm">
+                        <label precoDesconto="<%= precoVenda %>" precoProduto="<%= lista[k].product_site_value %>" class="infoLabel infoValor">
+                            <% 
+                            var myPrice = null
+                         
+                            if(precoVenda == undefined){
+                                myPrice = Number(lista[k].quantidade * (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor)) ) 
+                               }else{
+                                myPrice = Number(lista[k].quantidade *  (lista[k].quantidade >= lista[k].minimo_para_desconto && lista[k].valor ? lista[k].valor   : (lista[k].product_sell_by_weight ?  lista[k].product_site_value : lista[k].product_valor)))  
+                               }
+                            %>
+                            R$ <%= myPrice.toFixed(2) %>
+
+                            
+                        
+                        </label>
+                    </div>
+
+                    <!-- COMENTARIOS DO ITEM -->
+                    <% if(lista[k].caracteristica != null && lista[k].caracteristica != undefined && lista[k].caracteristica != ""
+                       || lista[k].comentario != null && lista[k].comentario != undefined && lista[k].comentario != ""
+                    ){ %>
+                    <br />
+                    <div class="col-md-12 row" style="border-top: 1px solid #efefef; padding: 2%;">
+                        <% if(lista[k].caracteristica != null && lista[k].caracteristica != undefined && lista[k].caracteristica != ""){
+                            %><label style="    margin: auto 15px !important;" class="anotacao"><%= lista[k].caracteristica %></label>
+                       <%  }%>
+                        <div style="margin: auto 5%;" class="ico dourado">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.077" height="13.077" viewBox="0 0 13.077 13.077">
+                                <defs>
+                                    <clipPath id="a"><path class="a" d="M12.783,13.077H0V8.522L8.522,0l4.555,4.555-7.1,7.1h6.808v1.42ZM8.522,2.008l-7.1,7.1v2.547H3.967l7.1-7.1Z" transform="translate(0 0)" /></clipPath>
+                                </defs>
+                                <g transform="translate(-3 -2.586)"><path class="b" d="M12.784,13.077H0V8.522L8.522,0l4.555,4.555-7.1,7.1h6.808v1.419ZM8.522,2.009h0l-7.1,7.1v2.547H3.967l7.1-7.1L8.522,2.009Z" transform="translate(3 2.586)" /></g>
+                            </svg>
+                            <label class="label"><%= lista[k].comentario %></label>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+          
+            <% } %>
+       
+<% } %>
+
+<script>
+    $(".miniatura").each(function () {       
+        getImageFromEAN($(this).attr("product_ean"), $(this).attr("product_code"), $(this))
+    })
+
+</script>

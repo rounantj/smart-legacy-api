@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Smartcommerci API NodeJS</title>
+      <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="hightLight.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+      <!-- and it's easy to individually load additional languages -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/go.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <style>
+         code {
+         white-space: pre; 
+         white-space: break-spaces;
+         }
+         .hljs{
+           max-width: 100%;
+         }
+         
+      </style>
+   </head>
+   <body>
+      <header>
+         <div class="container">
+            <br/><br/><br/>
+            <h2>Regras de negócio</h2>
+            <hr>
+            <div class="row">
+               <div  class="col-md-12 jumbotron">
+                
+                     <h4>Smartcommerci White Label</h4>
+                     <p>API e Modelagem de dados criada com a finalidade de atender as expectativas dos fluxos abaixo:</p>
+                     <label>Fluxos (layout front-end):</label><br>
+                     <a target="_blank" href="https://xd.adobe.com/view/b5555db7-073b-41db-8cd3-65baaf2e6476-e006/">CMS</a>,
+                   
+                     <a target="_blank" href="https://xd.adobe.com/view/6e1b3c53-6a73-486e-a325-f865668f8ba1-3b48/">Fluxo 1</a>,
+                   
+                     <a target="_blank" href="https://xd.adobe.com/view/630052b2-cf5c-4c4e-a084-97bdf58e07e2-3653/">Fluxo 2</a>
+                    
+                  
+                  
+                  
+                 
+               </div>
+            </div>
+         </div>
+      </header>
+      <hr>
+      <div class="container">
+         <br/><br/><br/>
+         <h2>Informações por aquivo</h2>
+         <hr>
+         <div class="row" style="float: right; width: 500px;">
+            <label for="search">Busque por arquivos:</label>
+            <input class="form-control" type="text" placeholder="Busque por arquivos aqui..." id="search">
+         </div>
+         <br>
+         <br/>
+         <br/>
+         <br/>
+         <% if (documents.length > 0) { %>
+         <div class="row">
+            <% for(const k in documents) {%>
+            <div  class="col-md-12 jumbotron">
+               <h4 class="title"><%= documents[k].file %></h4>
+               <p><%= documents[k].details %></p>
+               <p><b><%= documents[k].dependences %></b></p>
+               <div class=" pre snippet-code-css lang-css s-code-block card">
+                  <code class="pre hljs code <%= documents[k].language %>" ><%= documents[k].context %></code>
+               </div>
+            </div>
+            <% } %>
+         </div>
+         <% } %>
+      </div>
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+          <span class="text-muted">© 2021 Pull UP - Ronan Rodrigues</span>
+        </div>
+    
+      </footer>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+         $("#search").keyup(function(){  
+           var text = $(this)      .val().toLowerCase()
+           $(".jumbotron").each(function(){
+             if($(this).find(".title").text().toLowerCase().indexOf(text) >-1){
+               $(this).show();
+             }else{
+               $(this).hide();
+             }
+             
+           })
+         })
+         
+         // first, find all the div.code blocks
+         document.querySelectorAll('code').forEach(el => {
+           // then highlight each
+           hljs.highlightElement(el);
+         });
+ 
+        
+         
+         
+         
+      </script>
+   </body>
+</html>
