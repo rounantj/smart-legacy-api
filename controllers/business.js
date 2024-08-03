@@ -49,7 +49,7 @@ const conn = mysql.createConnection({
 async function execSQL(query, res) {
   conn.query(query, async function (error, results, fields) {
     if (!error) {
-      console.log({ query, results })
+      //console.log({ query, results })
       res.send(results)
     } else {
       console.log({ query, error })

@@ -59,6 +59,6 @@ const integrator = require('./integrator')
 
 integrator.start(app, _DIRETORIO_, verifyJWT, express)
 
-app.listen(6060, function () {
-  console.log('Port ' + 6060)
+app.listen(process.env.PORT_APPLICATION, function () {
+  console.log('Port ' + process.env.PORT_APPLICATION)
 })
