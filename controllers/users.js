@@ -16,7 +16,7 @@ const jwt = require('jsonwebtoken')
 // Configurando uma conexão com o database
 const conn = mysql.createConnection({
   host: process.env.host,
-  port: process.env.port,
+  port: process.env.port_db,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,

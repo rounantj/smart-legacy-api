@@ -11,7 +11,7 @@ require('dotenv').config()
 // Configurando uma conexão com o database
 const conn = mysql.createConnection({
   host: process.env.host,
-  port: process.env.port,
+  port: process.env.port_db,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
@@ -40,9 +40,9 @@ module.exports.getOrdersTemplate = function (body, res) {
     conn.query(
       //
       queryy +
-        // 'select *, orders.id as ORDER_ID, date_format(orders.updatedAt,"%d/%m/%Y %H:%i") as DATA_ATUALIZOU, date_format(orders.updatedAt,"%d/%m/%Y %H:%i") as updatedAt, date_format(orders.createdAt,"%d/%m/%Y %H:%i") as createdAt  from orders inner join users_clients where order_affiliate_id = ' +
-        body.affiliate_id +
-        ' and orders.order_client_id = users_clients.id order by orders.id desc',
+      // 'select *, orders.id as ORDER_ID, date_format(orders.updatedAt,"%d/%m/%Y %H:%i") as DATA_ATUALIZOU, date_format(orders.updatedAt,"%d/%m/%Y %H:%i") as updatedAt, date_format(orders.createdAt,"%d/%m/%Y %H:%i") as createdAt  from orders inner join users_clients where order_affiliate_id = ' +
+      body.affiliate_id +
+      ' and orders.order_client_id = users_clients.id order by orders.id desc',
       async function (error2, results, fields) {
         if (!error2) {
           if (Number(body.template) == 1) {
@@ -97,7 +97,7 @@ module.exports.productsOrderByListOrder = function (body, res) {
             minimo_para_desconto = 0
           for (const u in lista2) {
             if (lista2[u].product_code == results[k].product_code) {
-              ;(minimo_para_desconto = lista2[u].minimo_para_desconto),
+              ; (minimo_para_desconto = lista2[u].minimo_para_desconto),
                 (valor = lista2[u].valor),
                 (cara = lista2[u].caracteristica),
                 (anota = lista2[u].comentario),
