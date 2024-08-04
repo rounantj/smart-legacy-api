@@ -36,11 +36,11 @@ require('dotenv').config()
 // Configurando uma conexão com o database
 
 const conn = mysql.createConnection({
-  host: process.env.host,
+  host: process.env.host_db,
   port: process.env.port_db,
-  user: process.env.user,
-  password: process.env.password,
-  database: process.env.database,
+  user: process.env.user_db,
+  password: process.env.password_db,
+  database: process.env.database_db,
 })
 
 //==========================================================================================================
@@ -60,16 +60,6 @@ async function execSQL(query, res) {
 
 //==========================================================================================================
 
-// Função para envio de e-mails
-/*
-    Pré requisitos:
-        1- 'message' => array com os conteúdos 'to, from, subject, html'
-        2- 'parameters' => array com os dados de conexão 'host, port, secure, auth, tls, username'
-    
-    Retornos:
-        1- 'email enviado com sucesso" => ocorreu tudo bem.
-        2- 'messageError' => feedback com a mensagem de erro ocasionado.
-*/
 
 function gerarPassword() {
   return Math.random().toString(36).slice(-10)
