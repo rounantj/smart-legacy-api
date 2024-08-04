@@ -34,14 +34,15 @@ require('dotenv').config()
 //==========================================================================================================
 
 // Configurando uma conexão com o database
-
-const conn = mysql.createConnection({
+const databaseConfig = {
   host: process.env.host_db,
   port: process.env.port_db,
   user: process.env.user_db,
   password: process.env.password_db,
   database: process.env.database_db,
-})
+}
+console.log({ databaseConfig })
+const conn = mysql.createConnection(databaseConfig)
 
 //==========================================================================================================
 
