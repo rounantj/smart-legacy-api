@@ -18,23 +18,23 @@ const Op = Sequelize.Op
 
 // Setando credenciais
 const sequelize = new Sequelize(
-    process.env.database,
-    process.env.user,
-    process.env.password, {
-    host:process.env.host,
-    dialect:'mysql'
+    process.env.database_db,
+    process.env.user_db,
+    process.env.password_db, {
+    host: process.env.host_db,
+    dialect: 'mysql'
 })
 
 // Testando conexão
-sequelize.authenticate().then( function(){
-console.log("Connection ok!")
-}).catch(function(erro){
-    console.log("Throw error db: "+ erro)
+sequelize.authenticate().then(function () {
+    console.log("Connection ok!")
+}).catch(function (erro) {
+    console.log("Throw error db: " + erro)
 })
 
 
-module.exports = {    
-    Sequelize:Sequelize,
+module.exports = {
+    Sequelize: Sequelize,
     Op: Op,
     sequelize: sequelize
 }
