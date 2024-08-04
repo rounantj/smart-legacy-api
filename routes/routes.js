@@ -9,6 +9,7 @@ Objective: Definir as rotas da API
 //==========================================================================================================
 
 const fs = require('fs')
+const { upload: UPLOAD_TYPE, uploadFile: UPLOAD_FILE_TYPE } = require('../infra/s3-dapter');
 
 // Rota para listar todos os produtos
 module.exports.getAllProducts = function (app, verifyJWT, package) {
@@ -846,10 +847,10 @@ module.exports.uploadLogo = async function (app, verifyJWT, package) {
                 const newpath = path.join(
                   '',
                   './public/images/' +
-                    req.params.affiliate_id +
-                    '/' +
-                    product_code +
-                    '/',
+                  req.params.affiliate_id +
+                  '/' +
+                  product_code +
+                  '/',
                   files.fileimagem.name
                 )
                 fs.renameSync(oldpath, newpath)
@@ -933,7 +934,7 @@ module.exports.uploadPlanilha = async function (app, verifyJWT, package) {
         let excel2json
         if (
           files.fileimagem.name.split('.')[
-            files.fileimagem.name.split('.').length - 1
+          files.fileimagem.name.split('.').length - 1
           ] === 'xlsx'
         ) {
           excel2json = xlsxtojson
@@ -963,7 +964,7 @@ module.exports.excel2Json = function (app, verifyJWT, package) {
     let excel2json
     if (
       req.headers.filename.split('.')[
-        req.headers.filename.split('.').length - 1
+      req.headers.filename.split('.').length - 1
       ] === 'xlsx'
     ) {
       console.log('xlsx')
@@ -1013,60 +1014,42 @@ module.exports.excel2Json = function (app, verifyJWT, package) {
 //==========================================================================================================
 // Rota para realizar upload da logotipo
 
-module.exports.uploadBanners = async function (app, verifyJWT, package) {
-  app.put('/uploadBanners/:master_id', verifyJWT, (req, res) => {
+
+module.exports.uploadBanners = function (app, verifyJWT) {
+  app.put('/uploadBanners/:master_id', verifyJWT, UPLOAD_TYPE.single("fileimagem"), async (req, res) => {
     try {
-      if (
-        req.params.master_id != undefined &&
-        req.params.master_id != '' &&
-        req.params.master_id != null
-      ) {
-        const formidable = require('formidable')
-        const form = new formidable.IncomingForm()
-        const dir = './public/images/' + req.headers.master_id
+      if (req.params.master_id) {
 
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir)
+        const file = req.file;
+        const bucketName = 'smart-images';
+        const keyPrefix = 'masters/' + req.params.master_id;
+        if (!file) {
+          return res.status(400).send('Nenhum arquivo foi enviado.');
         }
-
-        form.parse(req, (err, fields, files) => {
-          const path = require('path')
-          const oldpath = files.fileimagem.path
-          const newpath = path.join(
-            '',
-            './public/images/' + req.headers.master_id + '/',
-            files.fileimagem.name
-          )
-          fs.renameSync(oldpath, newpath)
-          res.send({
-            resultOk: true,
-            message: 'File uploaded',
-            path:
-              './public/images/' +
-              req.headers.master_id +
-              '/' +
-              files.fileimagem.name,
-            fileNameIn: files.fileimagem.name,
-          })
-        })
+        const url = await UPLOAD_FILE_TYPE(file, bucketName, keyPrefix);
+        res.send({
+          resultOk: true,
+          message: 'File uploaded',
+          path: url,
+          fileNameIn: file.name,
+        });
       } else {
         res.status(500).json({
           headers: req.headers,
           message: 'Invalid data parameters!',
           yourData: 'error here',
-        })
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(500).json({
         message: 'Invalid data parameters!',
         yourData: 'error here out',
         errorMessage: error,
-      })
+      });
     }
-  })
-}
-
+  });
+};
 //==========================================================================================================
 // Rota para realizar upload da logotipo
 

@@ -31,6 +31,7 @@ const { brotliDecompress } = require('zlib')
 // Importando as variaveis de ambiente
 require('dotenv').config()
 
+
 //==========================================================================================================
 
 // Configurando uma conexão com o database
