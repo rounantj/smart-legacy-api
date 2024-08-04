@@ -5,7 +5,8 @@ Contact: Tel.: 27 996011204, Mail: ronan.rodrigues@pullup.tech
 Objective: Consultar e alterar os dados de usuários conforme as regras do negócio
 
 =========================================================================*/
-
+// Importando as variaveis de ambiente
+require('dotenv').config()
 // Importando modelos e dependências
 var users_masters = require('../models/users_masters')
 var users_affiliates = require('../models/users_affiliates')
