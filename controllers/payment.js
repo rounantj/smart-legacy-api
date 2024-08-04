@@ -1,9 +1,11 @@
 const axios = require('axios')
+// Importando as variaveis de ambiente
+require('dotenv').config()
 
 class ShipayPayment {
   constructor(apiKey) {
     this.apiKey =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NzU1NTI0MjQsIm5iZiI6MTY3NTU1MjQyNCwianRpIjoiNWJlYzY1OWEtODMzNC00ZTY3LWE0ZWEtNTNiNzFiMjg5ZTNmIiwiZXhwIjoxNjc1ODExNjI0LCJpZGVudGl0eSI6eyJhdXRoX3R5cGUiOiJjbGllbnQiLCJjdXN0b21lcl9pZCI6MjM0MCwic3RvcmVfcG9zX2lkIjo1NTQ4fSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.JG17eDtWCXpLE11WDPChNvkkhlfU_CnHL86fDPQokck'
+      process.env.SHIPAY_ACCESS_KEY
     this.refreshToken = null
     this.apiUrl = process.env.SHIPAY_API_URL
     this.authenticateClient()
