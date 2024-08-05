@@ -75,6 +75,7 @@ module.exports.start = function (app, _DIRETORIO_, verifyJWT, express) {
   routes.startup(app, package)
   routes.sendNews(app, verifyJWT, package)
   routes.getValidCode(app, package)
+  routes.getFilesUrl(app, package)
   routes.myColors(app, verifyJWT, package)
   routes.uploadLogo(app, verifyJWT, package)
   routes.tables(app, verifyJWT, package)

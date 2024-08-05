@@ -9,7 +9,7 @@ Objective: Definir as rotas da API
 //==========================================================================================================
 
 const fs = require('fs')
-const { upload: UPLOAD_TYPE, uploadFile: UPLOAD_FILE_TYPE } = require('../infra/s3-dapter');
+const { upload: UPLOAD_TYPE, uploadFile: UPLOAD_FILE_TYPE, listAllFiles } = require('../infra/s3-dapter');
 
 // Rota para listar todos os produtos
 module.exports.getAllProducts = function (app, verifyJWT, package) {
@@ -792,101 +792,49 @@ module.exports.getValidCode = async function (app, package) {
   })
 }
 
+module.exports.getFilesUrl = async function (app, package) {
+  app.post('/getFilesUrl', async function (req, res) {
+    try {
+      const data = await listAllFiles(req.body.folderName)
+      res.status(200).json({ data })
+    } catch (error) {
+      res.status(500).json({ fail: error?.message })
+    }
+
+  })
+}
+
+
 //==========================================================================================================
 // Rota para realizar upload da logotipo
 
 module.exports.uploadLogo = async function (app, verifyJWT, package) {
   app.post(
     '/uploadLogo/:affiliate_id/:product_code/:is_product_image',
-    verifyJWT,
-    (req, res) => {
+    verifyJWT, UPLOAD_TYPE.single("fileimagem"),
+    async (req, res) => {
       try {
-        console.log('AS INSTRUCOES', {
-          body: req.body,
-          headers: req.headers,
-        })
-        if (
-          req.params.affiliate_id != undefined &&
-          req.params.affiliate_id != '' &&
-          req.params.affiliate_id != null
-        ) {
-          const formidable = require('formidable')
-          const form = new formidable.IncomingForm()
-          const dir = './public/images/' + req.params.affiliate_id
-
-          if (
-            req.params.is_product_image == true ||
-            req.params.is_product_image == 'true'
-          ) {
-            if (
-              req.params.product_code != undefined &&
-              req.params.product_code != '' &&
-              req.params.product_code != null
-            ) {
-              var product_code = req.params.product_code
-              if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir)
-              }
-              console.log('PASTA EXISTE', {
-                pasta: dir + '/' + product_code,
-                existe: fs.existsSync(dir + '/' + product_code),
-              })
-              if (!fs.existsSync(dir + '/' + product_code)) {
-                fs.mkdirSync(dir + '/' + product_code)
-                console.log('PASTA CRIOU', {
-                  pasta: dir + '/' + product_code,
-                  existe: fs.existsSync(dir + '/' + product_code),
-                })
-              }
-
-              form.parse(req, (err, fields, files) => {
-                console.log(files)
-                const path = require('path')
-                const oldpath = files.fileimagem.path
-                //const newpath = path.join("", './apps/www.smartcommerci.co-api/src/data/images/'+req.headers.affiliate_id+'/', files.fileimage.name);
-                const newpath = path.join(
-                  '',
-                  './public/images/' +
-                  req.params.affiliate_id +
-                  '/' +
-                  product_code +
-                  '/',
-                  files.fileimagem.name
-                )
-                fs.renameSync(oldpath, newpath)
-                res.send({ resultOk: true, message: 'File uploaded' })
-              })
-            } else {
-              res
-                .status(500)
-                .json({ message: 'Invalid data parameters!', yourData: req })
-            }
-          } else {
-            if (!fs.existsSync(dir)) {
-              fs.mkdirSync(dir)
-            }
-
-            form.parse(req, (err, fields, files) => {
-              const path = require('path')
-              const oldpath = files.fileimagem.path
-              const newpath = path.join(
-                '',
-                './public/images/' + req.params.affiliate_id + '/',
-                files.fileimagem.name
-              )
-              fs.renameSync(oldpath, newpath)
-              res.send({
-                resultOk: true,
-                message: 'File uploaded no product',
-              })
-            })
-          }
-        } else {
-          res.status(500).json({
-            message: 'Invalid data parameters!',
-            yourData: 'error here',
-          })
+        let path = `${req.params.affiliate_id}`
+        if (req.params.is_product_image) {
+          path = path + `/${req.params.product_code}`
         }
+
+        const file = req.file;
+        const bucketName = 'smart-images';
+        const keyPrefix = path
+
+        if (!file) {
+          return res.status(400).send('Nenhum arquivo foi enviado.');
+        }
+        const url = await UPLOAD_FILE_TYPE(file, bucketName, keyPrefix);
+        res.send({
+          resultOk: true,
+          message: 'File uploaded',
+          path: url,
+          fileNameIn: file.name,
+        });
+
+
       } catch (error) {
         console.log(error)
         res.status(500).json({
